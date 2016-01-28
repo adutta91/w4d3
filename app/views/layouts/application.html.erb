@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NinetyNineCatsDay1</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<% logged_in = current_user.session_token == session[:session_token] unless current_user.nil? %>
+<h3> <%= current_user.username if logged_in %></h3>
+<%= yield %>
+
+<%button_status = logged_in ? "Log Out": "Log In"  %>
+
+<% if logged_in %>
+  <%= button_to button_status, session_url, method: :delete %>
+<% else %>
+  <%= button_to button_status, new_session_url, method: :get %>
+<% end %>
+
+</body>
+</html>
